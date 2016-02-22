@@ -7,15 +7,40 @@
 //
 
 import UIKit
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var storyboard = UIStoryboard(name: "Main", bundle: nil)
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Initialize Parse
+        // Set applicationId and server based on the values in the Heroku settings.
+        // clientKey is not used on Parse open source unless explicitly configured
+        Parse.initializeWithConfiguration(
+            ParseClientConfiguration(block: { (configuration:ParseMutableClientConfiguration) -> Void in
+                configuration.applicationId = "ParseApplication"
+                configuration.clientKey = "1234567"
+                configuration.server = "https://desolate-sea-49993.herokuapp.com/parse"
+            })
+        )
+        
+        // setup parse keys
+        Parse.setApplicationId("ParseApplication", clientKey: "1234567")
+        
+        // check if user is logged in.
+        if PFUser.currentUser() != nil {
+            let vc = storyboard.instantiateViewControllerWithIdentifier("tabBarController") as UIViewController!
+            window?.rootViewController = vc
+            // set the tabbar controller as a root vc instead of the nav bar. So i set myNav on the tabbar controller
+            // when drag the connection to Home, you've already drag it to the nav . 
+            // set the Home as the first tab bar, so when you set tab bar controller as the root vc, the Home vc will be shown. m
+            // if there is a logged in user then load the home view controller
+        }
         return true
     }
 
