@@ -14,11 +14,13 @@ class ComposeViewController: UIViewController, UIImagePickerControllerDelegate, 
     let userMedia = UserMedia()
     
     
-    @IBOutlet weak var captionLabel: UILabel!
+   
+    @IBOutlet weak var captionLabel: UITextField!
     @IBOutlet weak var composeImageView: UIImageView!
     @IBOutlet weak var tapLabel: UILabel!
     
     @IBAction func onTap(sender: AnyObject) {
+        print("got tap")
         //Instantiate UIImagePickerController
         let vc = UIImagePickerController()
         vc.delegate = self
@@ -32,7 +34,7 @@ class ComposeViewController: UIViewController, UIImagePickerControllerDelegate, 
         UserMedia.postUserImage(composeImageView.image!, withCaption: captionLabel.text!) { (success, error) -> Void in
             if success{
                 print("Success!")
-                self.tabBarController?.selectedIndex = 2
+                self.tabBarController?.selectedIndex = 0
                 let vc = self.tabBarController?.selectedViewController as! ViewController
                 vc.postsData()
             }else{
@@ -45,8 +47,7 @@ class ComposeViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        composeImageView.hidden = true
+       
         
         // Do any additional setup after loading the view.
     }

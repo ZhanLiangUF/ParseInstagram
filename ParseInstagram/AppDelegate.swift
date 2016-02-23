@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
         
         // setup parse keys
-        Parse.setApplicationId("ParseApplication", clientKey: "1234567")
+      
         
         // check if user is logged in.
         if PFUser.currentUser() != nil {
